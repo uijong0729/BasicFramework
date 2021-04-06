@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xml의 버전은 이 문서의 버전을 가리킴 -->
+
+<web-app>
+	<servlet>
+		<servlet-name>waf</servlet-name>
+		<servlet-class>com.code5.MasterController</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>waf</servlet-name>
+		<url-pattern>/waf/*</url-pattern>
+	</servlet-mapping>
+</web-app>
