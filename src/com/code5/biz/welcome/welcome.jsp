@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@page import="com.code5.fw.data.Box" %>
+<%@page import="com.code5.fw.web.BoxContext" %>
 <%
-	String msg = (String) request.getAttribute("msg");
+	Box box = BoxContext.getThread();
+	String msg = box.getString("msg");
 %>
 <html>
 <head>
