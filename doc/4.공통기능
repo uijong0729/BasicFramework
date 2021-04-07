@@ -1,0 +1,4 @@
+공통기능의 제공
+	1. 파라메터 : 코드가 복잡해짐
+	2. 멤버객체, 전역객체 : Thread-Safety하지 않음
+	3. ThreadLocal : static으로 선언해도 Thread-Safety하다 -> Static에 대한 접근으로 공통기능 제공

@@ -12,7 +12,7 @@ public class Welcome {
 	
 	public String execute(HttpServletRequest request) {
 		String name = request.getParameter("name");
-		String msg = "welcome, " + name;
+		String msg = "welcome = " + name;
 		
 		request.setAttribute("msg", msg);
 
