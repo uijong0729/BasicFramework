@@ -71,6 +71,7 @@ public abstract class Transaction {
 		this.conn.rollback();
 	}
 	
+	// 미리 준비된 구문에 Bind변수만 전달 : 정적 SQL (DBMS입장에선 PreparedStatement를 이용하는것이 빠름)
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
 		Connection conn = getConnection();
 		PreparedStatement ps = conn.prepareStatement(SQL);
@@ -78,11 +79,24 @@ public abstract class Transaction {
 		return ps;
 	}
 	
+	// 로직에 따라 그떄그떄 다른 SQL을 실행 : 동적 SQL (DBMS입장에선 처리가 느림)
 	Statement createStatement() throws SQLException {
 		Connection conn = getConnection();
 		Statement st = conn.createStatement();
 		stList.add(st);
 		return st;
+	}
+	
+	/**
+	 * @param ps
+	 * @return
+	 * @throws SQLException
+	 */
+	ResultSet getResultSet(PreparedStatement ps) throws SQLException {
+		ResultSet rs = ps.executeQuery();
+		rsList.add(rs);
+		return rs;
+
 	}
 	
 	void close() {
