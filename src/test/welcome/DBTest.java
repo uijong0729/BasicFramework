@@ -10,12 +10,10 @@ import com.code5.fw.web.BoxContext;
 import junit.framework.TestCase;
 
 public class DBTest extends TestCase {
-	
-	public void test_select() throws Exception {
+	public static void main(String[] args) throws Exception {
 		SqlRunner sr = SqlRunner.getSqlRunner();
 		Box box = BoxContext.getThread();
 		box.put("NAME", "aaa");
-		box.put("STAFF_ID", "555");
 		
 		Table table = sr.getTable("STAFF");
 		
@@ -29,7 +27,6 @@ public class DBTest extends TestCase {
 		
 		for (String str : table.getCols()) {
 			System.out.println(str);
-		}		
+		}	
 	}
-
 }
