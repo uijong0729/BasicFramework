@@ -6,7 +6,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+/**
+ * @author zero
+ *
+ */
 public class Table {
+
+	// Table(String[] colNames)
+
+	// addRecode(String[] recode)
+
+	// getData(String colName, int row)
+	// setData(String colName, int row, String data)
+
+	// MAX_RECODE_COUNT()
+	// isNextRecode()
+
 	/**
 	 * 
 	 */

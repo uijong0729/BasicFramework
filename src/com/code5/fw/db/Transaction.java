@@ -1,92 +1,132 @@
 package com.code5.fw.db;
 
-import java.sql.DriverManager;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.Connection;
 
+/**
+ * @author zero
+ * 
+ * 
+ * 
+ *
+ */
 public abstract class Transaction {
-	
-	private Connection conn = null;
-	private boolean setAutoCommit = false;
-	private ArrayList<ResultSet> rsList = new ArrayList<>();
-	private ArrayList<Statement> stList = new ArrayList<>();
-	
+
+	// conn 생성 -> createConnection, 늦은 객체 생성
+	// SQL 기능에 필요한 자원 생성 -> PrepareStatement, Statement, ResultSet
+	// conn 반납 -> SQL 기능에 사용된 자원 반납, close
+
+	// conn.setAutoCommit(false); -> setAutoCommitFalse
+	// conn.commit(); -> commit
+	// conn.rollback(); -> rollback
+
 	/**
-	 * 1. conn생성 -> createConnection, 늦은 객체 생성
-	 * 2. SQL 기능에 필요한 자원 생성 -> PrepareStatement, Statement, ResultSet
-	 * 3. conn자원 반납 -> SQL기능에 사용된 자원 반납, close
-	 * 4. 트랜잭션 상태 제어
 	 * 
+	 */
+	private Connection conn = null;
+
+	/**
 	 * @return
-	 * @throws SQLException
 	 */
 	protected abstract Connection createConnection() throws SQLException;
-	
+
+	/**
+	 * 
+	 */
 	public void closeConnection() {
+
 		try {
+
 			if (conn == null) {
 				return;
 			}
+
 			this.close();
 			conn.close();
-		}catch(Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
+
 	}
-	
+
 	/**
-	 * 개발자가 명시적으로 Connection을 쓸 수 없도록 감춤 -> 늦은 객체 생성을 위해
-	 * 
-	 * @return
-	 * @throws SQLException
+	 * @throws Exception
 	 */
-	private Connection getConnection() throws SQLException{
+	private Connection getConnection() throws SQLException {
 		if (this.conn == null) {
 			this.conn = createConnection();
 		}
+
 		return conn;
 	}
-	
+
+	/**
+	 * 
+	 */
 	public void commit() throws SQLException {
+
 		if (this.conn == null) {
 			return;
 		}
-		
-		//ResultSet을 반환
+
 		this.close();
 		this.conn.commit();
-	} 
-	
+
+	}
+
+	/**
+	 * 
+	 */
 	public void rollback() throws SQLException {
+
 		if (this.conn == null) {
 			return;
 		}
-		
-		//ResultSet을 반환
+
 		this.close();
 		this.conn.rollback();
+
 	}
-	
-	// 미리 준비된 구문에 Bind변수만 전달 : 정적 SQL (DBMS입장에선 PreparedStatement를 이용하는것이 빠름)
+
+	/**
+	 * 
+	 */
+	private ArrayList<Statement> stList = new ArrayList<Statement>();
+
+	/**
+	 * 
+	 */
+	private ArrayList<ResultSet> rsList = new ArrayList<ResultSet>();
+
+	/**
+	 * @param SQL
+	 * @return
+	 * @throws Exception
+	 */
 	PreparedStatement prepareStatement(String SQL) throws SQLException {
-		Connection conn = getConnection();
-		PreparedStatement ps = conn.prepareStatement(SQL);
+		Connection connection = getConnection();
+		PreparedStatement ps = connection.prepareStatement(SQL);
 		stList.add(ps);
 		return ps;
+
 	}
-	
-	// 로직에 따라 그떄그떄 다른 SQL을 실행 : 동적 SQL (DBMS입장에선 처리가 느림)
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
 	Statement createStatement() throws SQLException {
-		Connection conn = getConnection();
-		Statement st = conn.createStatement();
+		Connection connection = getConnection();
+		Statement st = connection.createStatement();
 		stList.add(st);
 		return st;
+
 	}
-	
+
 	/**
 	 * @param ps
 	 * @return
@@ -98,34 +138,52 @@ public abstract class Transaction {
 		return rs;
 
 	}
-	
+
+	/**
+	 * 
+	 */
 	void close() {
-		for (ResultSet rs : rsList) {
+
+		for (int i = 0; i < rsList.size(); i++) {
 			try {
-				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				rsList.get(i).close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
+
 		rsList.clear();
-		
-		for (Statement st : stList) {
+
+		for (int i = 0; i < stList.size(); i++) {
 			try {
-				st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				stList.get(i).close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
+
 		}
+
 		stList.clear();
+
 	}
-	
-	public void setAutoCommitFalse() throws SQLException{
+
+	/**
+	 * 
+	 */
+	private boolean setAutoCommit = false;
+
+	/**
+	 * 
+	 */
+	public void setAutoCommitFalse() throws SQLException {
+
 		if (setAutoCommit) {
 			return;
 		}
-		
+
 		setAutoCommit = true;
+
 		conn.setAutoCommit(false);
 	}
-	
+
 }
