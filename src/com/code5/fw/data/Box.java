@@ -27,6 +27,7 @@ public abstract class Box implements Serializable{
 	 */
 	public abstract Object get(String key);
 
+
 	/**
 	 * @param key
 	 * @return
@@ -135,7 +136,7 @@ public abstract class Box implements Serializable{
 		}
 
 	}
-	
+
 	/**
 	 * @param key
 	 * @return
@@ -154,5 +155,56 @@ public abstract class Box implements Serializable{
 
 		return new Table();
 
+	}
+
+	/**
+	 * @param key
+	 * @return
+	 */
+	public boolean getBoolean(String key) {
+
+		String s = s(key);
+		if ("true".equals(s)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * @param key
+	 * @param b
+	 * @return
+	 */
+	public void put(String key, boolean b) {
+		put(key, "" + b);
+	}
+
+	/**
+	 * 
+	 */
+	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
+
+	/**
+	 * 
+	 */
+	public static String KEY_REMOTE_ADDR = "com.code5.fw.web.KEY_REMOTE_ADDR";
+
+	/**
+	 * 
+	 */
+	public static String KEY_SERVICE_KEY = "com.code5.fw.web.KEY_SERVICE_KEY";
+
+	/**
+	 * @param sessionB
+	 */
+	public abstract void setSessionB(SessionB sessionB);
+
+	/**
+	 * @return
+	 */
+	public SessionB getSessionB() {
+		return (SessionB) get(KEY_SESSIONB);
 	}
 }

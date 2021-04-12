@@ -1,3 +1,6 @@
+-- Sql Server Management Studio
+-- SQL server ±¸¼º 2019
+
 USE [HUMAN]
 GO
 

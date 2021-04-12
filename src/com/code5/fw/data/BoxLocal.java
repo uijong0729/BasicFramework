@@ -16,6 +16,12 @@ public class BoxLocal extends Box{
 	public void put(String key, Object obj) {
 		map.put(key, obj);		
 	}
+
+	@Override
+	public void setSessionB(SessionB sessionB) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

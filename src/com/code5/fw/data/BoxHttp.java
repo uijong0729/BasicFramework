@@ -27,4 +27,10 @@ public class BoxHttp extends Box{
 	public void put(String key, Object obj) {
 		request.setAttribute(key, obj);		
 	}
+
+	@Override
+	public void setSessionB(SessionB sessionB) {
+		// TODO Auto-generated method stub
+		
+	}
 }
