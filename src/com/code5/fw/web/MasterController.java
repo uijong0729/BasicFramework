@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -42,10 +44,13 @@ public class MasterController extends HttpServlet{
 		TransactionContext.setThread(transaction);
 		
 		try {
-			Welcome welcome = new Welcome();
+			// "/login?isLogin=true" 에서 첫번째 문자 "/"를 버림
+			String key = request.getPathInfo().substring(1);
+			String jspKey = execute(key);
 			
-			// execute 내 처리가 하나의 트랜잭션 
-			String jsp = welcome.execute();
+			MasterControllerD dao = new MasterControllerD();
+			Box view = dao.getView(jspKey);
+			String jsp = view.s("JSP");
 			
 			// execute 성공시 커밋
 			TransactionContext.commit();
@@ -69,4 +74,42 @@ public class MasterController extends HttpServlet{
 			BoxContext.removeThread();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 * 
+	 * 
+	 */
+	public static String execute(String KEY) throws Exception {
+
+		MasterControllerD dao = new MasterControllerD();
+
+		Box controller = dao.getController(KEY);
+		String CLASS_NAME = controller.s("CLASS_NAME");
+		String METHOD_NAME = controller.s("METHOD_NAME");
+
+		// TODO [4] 동적 바인딩 -> 리플렉션 코드로 구현 
+		@SuppressWarnings("rawtypes")
+		Class newClass = Class.forName(CLASS_NAME);
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		Constructor constructor = newClass.getConstructor();
+
+		Object instance = constructor.newInstance();
+
+		if (!(instance instanceof BizController)) {
+			throw new Exception();
+		}
+
+		Method method = instance.getClass().getDeclaredMethod(METHOD_NAME);
+
+		// TODO [5]
+		String JSP_KEY = (String) method.invoke(instance);
+		return JSP_KEY;
+
+	}
+
 }

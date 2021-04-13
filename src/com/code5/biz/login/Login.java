@@ -4,6 +4,7 @@ import com.code5.biz.emp.Emp001;
 import com.code5.fw.data.Box;
 import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.MasterController;
 
 public class Login implements BizController {
 	
@@ -13,8 +14,8 @@ public class Login implements BizController {
 		boolean isLogin = box.getBoolean("isLogin");
 		
 		if (isLogin) {
-			Emp001 emp001 = new Emp001();
-			return emp001.emp00110();
+			// IoC : 객체의 생성/사용/마무리를 개발자 코드에서 수행하지 않음
+			return MasterController.execute("emp00110");
 		}
 		
 		return loginView();

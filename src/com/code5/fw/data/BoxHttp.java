@@ -2,7 +2,13 @@ package com.code5.fw.data;
 
 import javax.servlet.http.HttpServletRequest;
 
+// HttpServletRequest¿ë 
 public class BoxHttp extends Box{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private HttpServletRequest request = null;
 	

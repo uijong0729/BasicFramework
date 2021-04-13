@@ -3,8 +3,8 @@ package com.code5.fw.data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+// BoxLocal의 추상클래스 
 public abstract class Box implements Serializable{
-
 
 	/**
 	 * 

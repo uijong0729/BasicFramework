@@ -1,0 +1,51 @@
+
+DROP TABLE dbo.FW_CONTROLLER;
+
+DROP TABLE dbo.FW_VIEW;
+
+CREATE TABLE FW_CONTROLLER (
+ID varchar(40) PRIMARY KEY
+, CLASS_NAME varchar(40)
+, METHOD_NAME varchar(40)
+);
+
+CREATE TABLE FW_VIEW (
+ID varchar(40) PRIMARY KEY
+, JSP varchar(1000)
+);
+
+
+
+INSERT INTO FW_CONTROLLER VALUES ('emp00110','com.code5.biz.emp.Emp001','emp00110');
+INSERT INTO FW_CONTROLLER VALUES ('emp00120','com.code5.biz.emp.Emp001','emp00120');
+
+INSERT INTO FW_VIEW VALUES ('emp00110','/WEB-INF/classes/com/code5/biz/emp/jsp/emp00110.jsp');
+
+
+INSERT INTO FW_CONTROLLER VALUES ('login','com.code5.biz.login.Login','login');
+INSERT INTO FW_CONTROLLER VALUES ('loginView','com.code5.biz.login.Login','loginView');
+
+INSERT INTO FW_VIEW VALUES ('loginView','/WEB-INF/classes/com/code5/biz/login/jsp/loginView.jsp');
+
+
+DELETE FROM FW_SQL WHERE [KEY] IN ('MASTERCONTROLLERD_01','MASTERCONTROLLERD_02'); 
+
+INSERT INTO FW_SQL VALUES (
+'MASTERCONTROLLERD_01'
+, 'SELECT
+ID
+, CLASS_NAME
+, METHOD_NAME
+FROM FW_CONTROLLER
+WHERE ID = [ID]'
+);
+
+INSERT INTO FW_SQL VALUES (
+'MASTERCONTROLLERD_02'
+, 'SELECT
+ID
+, JSP
+FROM FW_VIEW
+WHERE ID = [ID]'
+);
+
