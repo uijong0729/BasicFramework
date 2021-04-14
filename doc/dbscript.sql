@@ -6,35 +6,16 @@ GO
 
 INSERT INTO [dbo].[FW_SQL]
            ([SQL]
-           ,[KEY])
+           ,[ID])
      VALUES
            ('SELECT * FROM STAFF WHERE NAME = [NAME]', 'STAFF01')
 GO
 
 INSERT INTO [dbo].[FW_SQL]
            ([SQL]
-           ,[KEY])
+           ,[ID])
      VALUES
            ('UPDATE STAFF SET NAME = [NAME] WHERE STAFF_ID = [STAFF_ID]', 'STAFF02')
-GO
-
-INSERT INTO [dbo].[STAFF]
-           ([STAFF_ID]
-           ,[AGE]
-           ,[NAME]
-           ,[GENDER])
-     VALUES
-           ('2', '20', 'BBB', 'M')
-GO
-
-
-INSERT INTO [dbo].[STAFF]
-           ([STAFF_ID]
-           ,[AGE]
-           ,[NAME]
-           ,[GENDER])
-     VALUES
-           ('1', '20', 'AAA', 'M')
 GO
 
 
@@ -55,7 +36,7 @@ INSERT INTO EMP VALUES ('N02','ZZZ','','D01');
 INSERT INTO EMP VALUES ('N03','ABC','','D02');
 
 CREATE TABLE EMP (
-KEY varchar(500) PRIMARY KEY
+ID varchar(500) PRIMARY KEY
 , SQL varchar(50)
 );
 

@@ -1,27 +1,41 @@
 package com.code5.fw.data;
 
-import java.util.*;
+import java.util.HashMap;
 
-public class BoxLocal extends Box{
-	private static final long serialVersionUID = 8918495845153476972L;
+/**
+ * @author zero
+ *
+ */
+public class BoxLocal extends Box {
 
-	private Map<String, Object> map = new HashMap<String, Object>();
-	
-	@Override
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private HashMap<String, Object> hm = new HashMap<String, Object>();
+
+	/**
+	 * 
+	 */
+	public BoxLocal() {
+
+	}
+
+	/**
+	 * 
+	 */
 	public Object get(String key) {
-		return map.get(key);
+		return hm.get(key);
 	}
 
-	@Override
+	/**
+	 * 
+	 */
 	public void put(String key, Object obj) {
-		map.put(key, obj);		
+		hm.put(key, obj);
 	}
-
-	@Override
-	public void setSessionB(SessionB sessionB) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 }

@@ -3,8 +3,11 @@ package com.code5.fw.data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-// BoxLocal의 추상클래스 
-public abstract class Box implements Serializable{
+/**
+ * @author zero
+ *
+ */
+public abstract class Box implements Serializable {
 
 	/**
 	 * 
@@ -26,7 +29,6 @@ public abstract class Box implements Serializable{
 	 * 
 	 */
 	public abstract Object get(String key);
-
 
 	/**
 	 * @param key
@@ -179,32 +181,5 @@ public abstract class Box implements Serializable{
 	 */
 	public void put(String key, boolean b) {
 		put(key, "" + b);
-	}
-
-	/**
-	 * 
-	 */
-	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
-
-	/**
-	 * 
-	 */
-	public static String KEY_REMOTE_ADDR = "com.code5.fw.web.KEY_REMOTE_ADDR";
-
-	/**
-	 * 
-	 */
-	public static String KEY_SERVICE_KEY = "com.code5.fw.web.KEY_SERVICE_KEY";
-
-	/**
-	 * @param sessionB
-	 */
-	public abstract void setSessionB(SessionB sessionB);
-
-	/**
-	 * @return
-	 */
-	public SessionB getSessionB() {
-		return (SessionB) get(KEY_SESSIONB);
 	}
 }

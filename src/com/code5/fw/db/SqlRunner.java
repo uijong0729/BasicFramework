@@ -52,7 +52,7 @@ public class SqlRunner {
 	 */
 	String getSQL(Transaction transaction, String KEY) throws SQLException {
 
-		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE [KEY] = '" + KEY + "'");
+		PreparedStatement ps = transaction.prepareStatement("SELECT SQL FROM FW_SQL WHERE ID = '" + KEY + "'");
 		//ps.setString(1, KEY);
 
 		ResultSet rs = transaction.getResultSet(ps);

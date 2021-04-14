@@ -6,8 +6,8 @@ import com.code5.fw.data.Table;
 import com.code5.fw.db.SqlRunner;
 
 /**
- * @author kroch
- *		DataObject
+ * @author zero
+ *
  */
 public class Emp001D {
 
@@ -19,10 +19,8 @@ public class Emp001D {
 	/**
 	 * @return
 	 * @throws SQLException
-	 * 
-	 * 접근제어자 default로하면 해당 패키지에서만 사용되기 떄문에 테스트 범위도 줄어든다.
 	 */
-	Table emp00101() throws SQLException {
+	Table emp00110() throws SQLException {
 		return sql.getTable("EMP001D_01");
 	}
 
@@ -30,7 +28,7 @@ public class Emp001D {
 	 * @return
 	 * @throws SQLException
 	 */
-	int emp00102() throws SQLException {
+	int emp00120() throws SQLException {
 		return sql.executeSql("EMP001D_02");
 	}
 

@@ -6,61 +6,101 @@ import com.code5.fw.db.Transaction;
 import com.code5.fw.db.TransactionSQLServerPool;
 
 /**
- * @author kroch
- *	private 생성자를 가진 유틸 클래스 
+ * @author zero
+ *
  */
 public class TransactionContext {
-	
+
+	// 유틸 클래스, private 생성자
+	// AOP -> ThreadLocal
+	// createDefaultTransaction -> Transaction_SQLITE_JDBC
+	// WAS 환경에선 Transaction_SQLITE_POOL 사용
+	// 개발자가 사용기 편한 commit 과 rollback
+
+	/**
+	 * 
+	 */
 	private TransactionContext() {
-		
+
 	}
-	
-	private static ThreadLocal<Transaction> TL = new ThreadLocal<>();
-	
+
+	/**
+	 * 
+	 */
+	private static ThreadLocal<Transaction> TL = new ThreadLocal<Transaction>();
+
+	/**
+	 * @return
+	 * 
+	 * 
+	 */
 	public static Transaction getThread() {
 		Transaction transaction = TL.get();
-		if(transaction != null) {
+		if (transaction != null) {
 			return transaction;
-		}else{
-			transaction = createDefaultTransaction();
+
 		}
-		
+
+		transaction = createDefaultTransaction();
 		setThread(transaction);
-		
+
 		return transaction;
 	}
-	
-	public static void commit() throws SQLException {
-		Transaction ta = TL.get();
-		if (ta == null) {
-			return;
-		}
-		ta.commit();
-	}
-	
-	public static void rollback() throws SQLException {
-		Transaction ta = TL.get();
-		if (ta == null) {
-			return;
-		}
-		ta.rollback();
-	}
-	
-	// Master Controller에서 제어하기 떄문에 디폴트 접근제한
+
+	/**
+	 * @param transaction
+	 * 
+	 * 
+	 */
 	static void setThread(Transaction transaction) {
 		TL.set(transaction);
 	}
-	
-	// Master Controller에서 제어하기 떄문에 디폴트 접근제한
+
+	/**
+	 *
+	 */
 	static void removeThread() {
-		Transaction ta = TL.get();
-		if (ta != null) {
+		Transaction transaction = TL.get();
+		if (transaction != null) {
 			TL.get().closeConnection();
 		}
+
 		TL.remove();
 	}
-	
+
+	/**
+	 * @return
+	 * 
+	 *         TODO [2]
+	 */
 	private static Transaction createDefaultTransaction() {
 		return new TransactionSQLServerPool();
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public static void commit() throws SQLException {
+
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			return;
+		}
+
+		transaction.commit();
+	}
+
+	/**
+	 * 
+	 */
+	public static void rollback() throws SQLException {
+
+		Transaction transaction = TL.get();
+		if (transaction == null) {
+			return;
+		}
+
+		transaction.rollback();
+
 	}
 }

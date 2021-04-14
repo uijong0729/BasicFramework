@@ -4,7 +4,7 @@
 <web-app>
 	<servlet>
 		<servlet-name>waf</servlet-name>
-		<servlet-class>com.code5.MasterController</servlet-class>
+		<servlet-class>com.code5.fw.web.MasterController</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

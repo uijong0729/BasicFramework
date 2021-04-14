@@ -4,14 +4,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Box box = BoxContext.getThread();
-	Table table = box.getTable("list");
+
+Table table = box.getTable("table");
+String[] cols = table.getCols();
+
+for (int i = 0; i < table.size(); i++) {
+	for (int ii = 0; ii < cols.length; ii++) {
+		out.println(table.s(cols[ii], i));
+
+	}
+}
 %>
-<html>
-<head>
-</head>
-<body>
-<%=table.toString()%>
-</body>
-</html>
-
-

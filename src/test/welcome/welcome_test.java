@@ -29,7 +29,7 @@ public class welcome_test extends TestCase {
 		box.put("name", name);
 
 		Welcome welcome = new Welcome();
-		welcome.execute();
+		//welcome.execute();
 
 		// String msg = (String) request.getAttribute("msg"); // Get
 		String msg = box.getString("msg"); // Get

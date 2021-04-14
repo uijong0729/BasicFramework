@@ -1,89 +1,55 @@
 package com.code5.biz.emp;
 
-import org.junit.jupiter.api.AfterAll;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.Table;
+import com.code5.fw.web.BizController;
 import com.code5.fw.web.BoxContext;
-import com.code5.fw.web.TransactionContext;
 
 /**
  * @author zero
  *
  */
-public class Emp001 {
+public class Emp001 implements BizController {
 
-	// SQL 의존문제를 해결하기 위한 방법
-	// 1. SQL 과 JAVA 코드 분리 -> KEY
-	// 2. 정적 SQL, 동적 SQL 장점을 흡수한 쉬운 사용 -> getTable, executeSql
-	// 3. 컬랙션의 단점을 해결 -> Table
-	
 	/**
 	 * @return
 	 * @throws Exception
 	 * 
-	 * 사원정보 조회
+	 *                   사원정보 조회
 	 */
-	public String emp00110() throws Exception{
+	public String emp00110() throws Exception {
+
 		Box box = BoxContext.getThread();
+
 		Emp001D dao = new Emp001D();
-		Table table = dao.emp00101();
+		Table table = dao.emp00110();
+
 		box.put("table", table);
-		
+
 		return "emp00110";
 	}
-	
+
 	/**
 	 * @return
 	 * @throws Exception
 	 * 
-	 * 사원정보 중 번호 수정
+	 *                   사원정보 중 휴대폰 번호 수정
 	 */
-	public String emp00120() throws Exception{
-		return emp00110();
-	}
-	
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	public String emp00101() throws Exception {
+	public String emp00120() throws Exception {
 
 		Box box = BoxContext.getThread();
 
 		Emp001D dao = new Emp001D();
-		Table table = dao.emp00101();
-		box.put("table", table);
-
-		return "/WEB-INF/classes/com/code5/biz/emp/emp00101.jsp";
-
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	public String emp00102() throws Exception {
-
-		emp00101();
-
-		Box box = BoxContext.getThread();
-		Table table = box.getTable("table");
-
-		Emp001D dao = new Emp001D();
-
+		Table table = dao.emp00110();
 		for (int i = 0; i < table.size(); i++) {
-
-			box.put("EMP_N", table.getData("EMP_N", i));
-
-			int updateCnt = dao.emp00102();
-			if (updateCnt != 1) {
+			String THIS_EMP_N = table.s("EMP_N", i);
+			box.put("EMP_N", THIS_EMP_N);
+			if (dao.emp00120() != 1) {
 				throw new Exception();
 			}
 		}
 
-		TransactionContext.commit();
-
-		return emp00101();
+		return emp00110();
 	}
 }
