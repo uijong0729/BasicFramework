@@ -182,4 +182,36 @@ public abstract class Box implements Serializable {
 	public void put(String key, boolean b) {
 		put(key, "" + b);
 	}
+
+	//----------------------------------------------------------------
+	// 입력출력을 공통화한 추상화 객체 Box에 SessionB를 저장하는 이유
+	//  - 세션에서 가져오는 것이 아닌, 내부 자료구조 HashMap에서 데이터를 취득하기 위함
+	//----------------------------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public static String KEY_SESSIONB = "com.code5.fw.web.KEY_SESSIONB";
+
+	/**
+	 * 
+	 */
+	public static String KEY_REMOTE_ADDR = "com.code5.fw.web.KEY_REMOTE_ADDR";
+
+	/**
+	 * 
+	 */
+	public static String KEY_SERVICE_KEY = "com.code5.fw.web.KEY_SERVICE_KEY";
+
+	/**
+	 * @param sessionB
+	 */
+	public abstract void setSessionB(SessionB sessionB);
+
+	/**
+	 * @return
+	 */
+	public SessionB getSessionB() {
+		return (SessionB) get(KEY_SESSIONB);
+	}
 }

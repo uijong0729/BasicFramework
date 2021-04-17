@@ -6,6 +6,10 @@ import java.util.HashMap;
  * @author zero
  *
  */
+/**
+ * @author kroch
+ *	WAS없이 로직 수행가능한 객체 (테스트용)
+ */
 public class BoxLocal extends Box {
 
 	/**
@@ -36,6 +40,13 @@ public class BoxLocal extends Box {
 	 */
 	public void put(String key, Object obj) {
 		hm.put(key, obj);
+	}
+
+	/**
+	 *
+	 */
+	public void setSessionB(SessionB sessionB) {
+		hm.put(KEY_SESSIONB, sessionB);
 	}
 
 }

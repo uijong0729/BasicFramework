@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxHttp;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.db.TransactionSQLServerPool;
 
@@ -31,7 +32,7 @@ public class MasterController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Box box = new BoxHttp(request);
+		Box box = createBox(request);
 		BoxContext.setThread(box);
 
 		Transaction transaction = new TransactionSQLServerPool();
@@ -87,6 +88,11 @@ public class MasterController extends HttpServlet {
 		String CLASS_NAME = controller.s("CLASS_NAME");
 		String METHOD_NAME = controller.s("METHOD_NAME");
 
+		boolean checkUrlAuth = checkUrlAuth(controller);
+		if (!checkUrlAuth) {
+			throw new Exception("사용할 수 없는 서비스 입니다.");
+		}
+
 		// TODO [4]
 		@SuppressWarnings("rawtypes")
 		Class newClass = Class.forName(CLASS_NAME);
@@ -105,6 +111,63 @@ public class MasterController extends HttpServlet {
 		// TODO [5]
 		String JSP_KEY = (String) method.invoke(instance);
 		return JSP_KEY;
+
+	}
+
+	/**
+	 * @param controller
+	 * @return
+	 * @throws Exception
+	 */
+	private static boolean checkUrlAuth(Box controller) throws Exception {
+
+		String SESSION_CHECK_YN = controller.s("SESSION_CHECK_YN");
+
+		// TODO [3]
+		if (!"Y".equals(SESSION_CHECK_YN)) {
+			return true;
+		}
+
+		Box box = BoxContext.getThread();
+		SessionB user = box.getSessionB();
+		if (user == null) {
+			throw new Exception();
+		}
+
+		String AUTH = controller.s("AUTH");
+
+		if ("".equals(AUTH)) {
+			return true;
+		}
+
+		// TODO [4]
+		if (AUTH.indexOf(user.getAuth()) >= 0) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * @param request
+	 * @return
+	 */
+	private Box createBox(HttpServletRequest request) {
+
+		Box box = new BoxHttp(request);
+
+		String KEY = request.getPathInfo().substring(1);
+		box.put(Box.KEY_SERVICE_KEY, KEY);
+
+		box.put(Box.KEY_REMOTE_ADDR, request.getRemoteAddr());
+
+		Object sessionB = request.getSession().getAttribute(Box.KEY_SESSIONB);
+		if (sessionB instanceof SessionB) {
+			box.put(Box.KEY_SESSIONB, sessionB);
+		}
+
+		return box;
 
 	}
 

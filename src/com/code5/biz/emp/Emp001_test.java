@@ -1,8 +1,9 @@
 package com.code5.biz.emp;
 
-
 import com.code5.fw.data.Box;
+import com.code5.fw.data.SessionB;
 import com.code5.fw.web.BoxContext;
+import com.code5.fw.web.MasterController;
 import com.code5.fw.web.TransactionContext;
 
 import junit.framework.TestCase;
@@ -11,35 +12,48 @@ import junit.framework.TestCase;
  * @author zero
  *
  */
+/**
+ * @author kroch
+ *	
+ *	IoC관점 : setUp() -> [테스트 동작수행] -> tearDown()  
+ */
 public class Emp001_test extends TestCase {
 
 	/**
-	 * @throws Exception
+	 *	매 테스트 케이스마다 전처리를 수행 
 	 */
-	public void xtest_emp00110() throws Exception {
-
+	@Override
+	protected void setUp() throws Exception {
+		SessionB user = new SessionB("id_U0", "U0", "10.1.1.1");
 		Box box = BoxContext.getThread();
-		box.put("EMP_NM", "ABC");
+		box.setSessionB(user);
+	}
 
-		Emp001 emp001 = new Emp001();
-		emp001.emp00110();
-
+	/**
+	 *	매 테스트 케이스마다 후처리를 수행 
+	 */
+	@Override
+	protected void tearDown() throws Exception {
+		TransactionContext.commit();
 	}
 
 	/**
 	 * @throws Exception
 	 */
+	public void test_emp00110() throws Exception {
+
+		MasterController.execute("emp00110");
+
+	}
+
+	/**
+	 * @throws Exception
+	 * 
+	 * 이 로직이 실행될 경우 권한 에러가 발생함
+	 */
 	public void test_emp00120() throws Exception {
 
-		Box box = BoxContext.getThread();
-		box.put("EMP_NM", "ABC");
-		box.put("HP_N", "010-2222-3333");
-
-		Emp001 emp001 = new Emp001();
-		emp001.emp00120();
-
-		TransactionContext.commit();
-
+		MasterController.execute("emp00120");
 	}
 
 }
