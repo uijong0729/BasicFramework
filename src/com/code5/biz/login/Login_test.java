@@ -6,7 +6,7 @@ import com.code5.fw.web.BoxContext;
 import junit.framework.TestCase;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class Login_test extends TestCase {

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * @author zero
+ * @author kroch
  * 
  * 
  * 

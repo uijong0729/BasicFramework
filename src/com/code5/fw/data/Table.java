@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class Table {

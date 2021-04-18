@@ -9,7 +9,7 @@ import com.code5.fw.web.TransactionContext;
 import junit.framework.TestCase;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 /**

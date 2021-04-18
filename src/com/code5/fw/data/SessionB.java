@@ -3,7 +3,7 @@ package com.code5.fw.data;
 import java.io.Serializable;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 /**

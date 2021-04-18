@@ -18,7 +18,7 @@ import com.code5.fw.db.Transaction;
 import com.code5.fw.db.TransactionSQLServerPool;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class MasterController extends HttpServlet {

@@ -12,7 +12,7 @@ import com.code5.fw.web.BoxContext;
 import com.code5.fw.web.TransactionContext;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class SqlRunner {

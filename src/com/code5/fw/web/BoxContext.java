@@ -4,7 +4,7 @@ import com.code5.fw.data.Box;
 import com.code5.fw.data.BoxLocal;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class BoxContext {

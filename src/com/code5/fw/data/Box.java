@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public abstract class Box implements Serializable {

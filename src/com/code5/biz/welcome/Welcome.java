@@ -1,7 +1,7 @@
 package com.code5.biz.welcome;
 
 /**
- * @author zero
+ * @author kroch
  *
  */
 public class Welcome {
