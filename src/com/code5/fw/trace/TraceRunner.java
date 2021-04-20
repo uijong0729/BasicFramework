@@ -135,7 +135,7 @@ public final class TraceRunner {
 	}
 
 	/**
-	 * 
+	 * 	멀티 쓰레드 환경에서는 쓰레드끼리 서로 경쟁하며 하나의 파일에 접근한다. 
 	 */
 	private synchronized void init() {
 
@@ -274,6 +274,9 @@ public final class TraceRunner {
 	}
 
 	/**
+	 * 
+	 * 멀티 쓰레드 환경
+	 * 
 	 * @param logKey
 	 * @param className
 	 * @param classNameShort
@@ -283,6 +286,7 @@ public final class TraceRunner {
 
 		Box box = BoxContext.getThread();
 
+		// 로그 거부 정책이 true인 경우 넘어감
 		boolean isNotLogWrite = isNotLogWrite(className, box);
 		if (isNotLogWrite) {
 			return;
@@ -298,7 +302,9 @@ public final class TraceRunner {
 		if (!this.isMulti) {
 			System.out.println(log);
 		}
-
+		
+		// 멀티 쓰레드는 하나의 로그파일을 가지고 서로 경쟁하며 기록
+		// synchronized 키워드가 사용된 블록은 처리를 간결하게 해야한다.
 		synchronized (logKey.intern()) {
 
 			TraceWriter traceWriter = traceWriterMap.get(logKey);
@@ -324,6 +330,7 @@ public final class TraceRunner {
 			traceWriter.println(log);
 			traceWriter.initCnt++;
 
+			// 롤링정책 : 5000줄 마다 새로운 파일 작성 (파일 크기를 재는 것보다 가벼운 처리) 
 			if (traceWriter.initCnt < 5000) {
 				return;
 			}
@@ -346,7 +353,7 @@ public final class TraceRunner {
 	}
 
 	/**
-	 * 
+	 * 	버퍼에 있는 정보를 디스크로 보내는 메소드 (무거운 연산)
 	 */
 	public void flush() {
 
@@ -395,6 +402,7 @@ public final class TraceRunner {
 		try {
 
 			String url = InitProperty.TRACE_CONFIG_URL();
+			// 데코레이션 패턴 
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(url)));
 
 			for (int i = 0; i < 10000; i++) {

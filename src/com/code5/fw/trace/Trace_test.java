@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 /**
  * @author kroch
- *
+ *	
  */
 public class Trace_test extends TestCase {
 

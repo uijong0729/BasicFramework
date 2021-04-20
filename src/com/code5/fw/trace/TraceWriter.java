@@ -31,6 +31,7 @@ class TraceWriter {
 		this.isMulti = isMulti;
 
 		try {
+			// 데코레이션 패턴 
 			this.out = new BufferedWriter(new FileWriter(this.logFileUrl, true));
 
 		} catch (Exception ex) {

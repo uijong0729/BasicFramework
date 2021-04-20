@@ -35,6 +35,8 @@ public class DataCrypt_test extends TestCase {
 
 	/**
 	 * @throws Exception
+	 * 
+	 *  $ : 달러 표시는 내부 클래스를 의미함
 	 */
 	public void test_쓰레드안전성() throws Exception {
 

@@ -16,6 +16,7 @@ import com.code5.fw.data.BoxHttp;
 import com.code5.fw.data.SessionB;
 import com.code5.fw.db.Transaction;
 import com.code5.fw.db.TransactionSQLServerPool;
+import com.code5.fw.trace.TraceRunner;
 
 /**
  * @author kroch
@@ -168,6 +169,18 @@ public class MasterController extends HttpServlet {
 		}
 
 		return box;
+
+	}
+	@Override
+	public void destroy() {
+		TraceRunner.getTraceRunner().flush();
+		super.destroy();
+	}
+
+	/**
+	 * 
+	 */
+	protected void endService() {
 
 	}
 
