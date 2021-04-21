@@ -38,7 +38,7 @@
 			## WAS관점의 로그 : TraceRunner
 			## AOP관점의 로그 : Trace
 		# 단일쓰레드 환경
-		
+	- 로그 레벨
 	
 	
 	
